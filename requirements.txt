@@ -1,0 +1,16 @@
+transformers
+einops
+accelerate
+bitsandbytes
+langchain
+requests
+pdfminer.six
+bs4
+sentence_transformers
+chromadb
+torch
+langchain-community
+streamlit
+gradio
+pypdf
+ctransformers
