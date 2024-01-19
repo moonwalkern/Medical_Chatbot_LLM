@@ -5,7 +5,7 @@ from langchain_community.vectorstores import FAISS
 from langchain.chains import RetrievalQA
 import gradio as gr
 
-DB_FAISS_PATH = "vectorstores/db_faiss"
+DB_FAISS_PATH = "Medical_Chatbot_LLM/vectorstores/db_faiss"
 
 custom_prompt_template = """Use the following piece of information to answer the user's question.
 If you don't know the answer, just say that you dont know, dont try to make up an answer.
@@ -36,7 +36,7 @@ def reteriever_qa_llm(llm, prompt, db):
 
 def load_llm():
     llm = CTransformers(
-        model = "llama-2-7b-chat.ggmlv3.q8_0.bin",
+        model = "Medical_Chatbot_LLM/llama-2-7b-chat.ggmlv3.q8_0.bin",
         model_type = "llama",
         config={'max_new_tokens': 1024,
                 'temperature': 0.01,
@@ -62,7 +62,7 @@ def final_result(query, history):
     sources = response["source_documents"]
 
     if sources:
-        answer += f"\nSources:" + str(sources)
+        answer += f"\n\nSources:" + str(sources)
     else:
         answer += "\nNo sources found"
     return answer
@@ -72,8 +72,26 @@ def main():
     response = final_result(question,None)
     print(response)
 
-if __name__ == "__main__":
-    gr.ChatInterface(
+# if __name__ == "__main__":
+#     gr.ChatInterface(
+#         final_result,
+#         chatbot=gr.Chatbot(height=500),
+#         textbox=gr.Textbox(placeholder="Enter your question here",container=False, scale=7),
+#         title="Search for Medical Questions",
+#         theme="soft",
+#         examples=[
+#             "What is Abortion",
+#             "What is First trimester abortions",
+#             "What is MEDICAL ABORTIONS."
+#         ],
+#         cache_examples=False,
+#         retry_btn=None,
+#         undo_btn="Delete Previous",
+#         clear_btn="Clear"
+#     ).launch()
+
+
+medical_chat = gr.ChatInterface(
         final_result,
         chatbot=gr.Chatbot(height=500),
         textbox=gr.Textbox(placeholder="Enter your question here",container=False, scale=7),
@@ -88,4 +106,4 @@ if __name__ == "__main__":
         retry_btn=None,
         undo_btn="Delete Previous",
         clear_btn="Clear"
-    ).launch()
+    )

@@ -14,3 +14,4 @@ streamlit
 gradio
 pypdf
 ctransformers
+faiss_cpu
